@@ -1,0 +1,30 @@
+.post{
+    display: flex;
+    max-width: 600px;
+    background-color: white;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid lightblue;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.post_image{
+    max-width: 600px;
+}
+.post_text {
+    margin: 20px 0px 20px 20px;
+    font-weight: normal;
+    padding: 5px;
+}
+.post_form{
+    display: flex;
+    margin-top: 20px;
+}
+.post_input{
+    flex: 1;
+}
+.add_rating{
+    margin: 20px 0px 20px 20px;
+    font-weight: normal;
+    padding: 5px;
+}

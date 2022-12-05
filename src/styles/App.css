@@ -25,3 +25,10 @@
 .app_signinBtn {
   margin-right: 20px !important;
 }
+.add_post{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 50px;
+  margin-right: 50px;
+}
