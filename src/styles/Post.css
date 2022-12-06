@@ -12,6 +12,7 @@
 }
 .post_image{
     max-width: 600px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px !important;
 }
 .post_text {
     margin: 20px 0px 20px 20px;
@@ -22,14 +23,21 @@
 .post_form{
     display: flex;
     margin-top: 20px;
+    margin-bottom: 5px;
 }
 .post_input{
     flex: 1;
-    
 }
 .add_rating{
     margin: 20px 0px 20px 20px;
     font-weight: normal;
     padding: 5px;
+}
+.delete_button{
+    background-color: #EE4B2B !important;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px !important;
+}
+.delete_text{
+    color: white;
 }
 
