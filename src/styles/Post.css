@@ -18,7 +18,6 @@
     margin: 20px 0px 20px 20px;
     font-weight: normal;
     padding: 5px;
-    
 }
 .post_form{
     display: flex;
@@ -33,11 +32,15 @@
     font-weight: normal;
     padding: 5px;
 }
-.delete_button{
+.options_button{
     background-color: #EE4B2B !important;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px !important;
 }
 .delete_text{
     color: white;
 }
-
+.settings_button{
+    border-radius: 10px !important;
+    background-color: #D89848 !important;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px !important;
+}
