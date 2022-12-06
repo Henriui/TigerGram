@@ -1,6 +1,9 @@
 * {
   margin: 0;
 }
+body,html{
+  width: 100%;
+}
 @font-face {
   font-family: 'billabongregular';
   src: url('fontsfree-net-billabong-webfont.woff2') format('woff2'),
@@ -8,6 +11,15 @@
   font-weight: normal;
   font-style: normal;
 }
+/* .app{
+  height: 100%;
+  margin: 0;
+  width: 100%;
+  padding: 10;
+  position: absolute;
+    top: 0;
+    bottom: 0;
+} */
 .app_name{
   font-family: 'billabongregular';
   font-size: 50px;
@@ -16,6 +28,7 @@
 }
 .app_header {
   display: flex;
+  /* position: fixed; */
   align-items: center;
   justify-content: space-between;
   background-color: white;
@@ -31,4 +44,12 @@
   right: 0;
   margin-bottom: 50px;
   margin-right: 50px;
+  
+}
+.app_siginForm{
+  display: flex;
+  flex-direction: column;
+}
+.app_formField{
+  margin-bottom: 10px !important;
 }

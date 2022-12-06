@@ -17,7 +17,7 @@ function Post({ post }) {
     // FIXME: when submitting comment, the text field does not empty out.
     const addComment = (event) => {
         event.preventDefault();
-        const comments = [...post.comments, { username: "Testi", avatar: "/static/images/avatar/2.jpg", text: comment }]
+        const comments = [...post.comments, { username: "Testi Kommentoija", avatar: "/static/images/avatar/2.jpg", text: comment }]
         const newPostComment = { ...post, comments }
         setComment("");
         Object.assign(post, newPostComment)
@@ -33,9 +33,9 @@ function Post({ post }) {
                 </ListItem>
                 <img className='post_image' src={post.image} alt='Post pic' />
                 <h4 className='post_text'><strong>{post.username}: </strong>{post.text} </h4>
-                <div className='add_rating'>
+                {/* <div className='add_rating'>
                     <HoverRating />
-                </div>
+                </div> */}
                 <div className='post_comment'>
                     {post.comments.map((comment, i) =>
                         <Comments key={i} comment={comment} />
