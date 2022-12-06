@@ -110,6 +110,7 @@ function App() {
     return (
       <>
         <div className="app">
+          {/* TODO: if user is not logged in. then the add button should be hidden (the MODAL part)*/}
           <Modal
             open={newPost}
             onClose={() => setNewPost(false)}>
