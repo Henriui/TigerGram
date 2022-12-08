@@ -1,13 +1,14 @@
-require('dotenv').config()
-const express = require('express')
-const morgan = require('morgan')
-
-const tigerApp = express()
-
-// Morgan logger
-
-morgan.token('body', (req) => JSON.stringify(req.body))
-tigerApp.use(morgan(':method :url :status :res[content-length] - :response-time ms - :body'))
 
 // Gets 
 
+
+const app = require('./tigerApp')
+const http = require('http')
+const config = require('./utils/config')
+const logger = require('./utils/logger')
+
+const server = http.createServer(app)
+
+server.listen(config.PORT, () => {
+  logger.info(`Server running on port ${config.PORT}`)
+})
