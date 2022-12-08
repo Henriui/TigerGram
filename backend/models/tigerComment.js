@@ -1,19 +1,9 @@
 const mongoose = require('mongoose')
 
-const tigerUserSchema = new mongoose.Schema({
-    tigerPostId: {
-        type: Number,
-        required: [true, 'tigerPostId required']
-
-    },
-    username: {
-        type: String,
-        minLength: 2,
-        required: [true, 'Username required']
-    },
-    avatar: {
-        type: URL,
-        required: [true, 'Avatar required']
+const tigerCommentSchema = new mongoose.Schema({
+    tigerUser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'TigerUser'
     },
     text: {
         type: String,
@@ -21,5 +11,5 @@ const tigerUserSchema = new mongoose.Schema({
         required: [true, 'Comment required']
     }
 })
-
-module.exports = mongoose.model('tigerComment', tigerUserSchema)
+const TigerComment = mongoose.model('TigerComment', tigerCommentSchema)
+module.exports = TigerComment

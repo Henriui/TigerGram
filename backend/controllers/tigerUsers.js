@@ -1,24 +1,43 @@
-const tigerPostsRouter = require('express').Router()
-const tigerUser = require('../models/tigerUser')
 const bcrypt = require('bcrypt')
+const TigerUserRouter = require('express').Router()
+const TigerUser = require('../models/tigerUser')
 
-tigerPostsRouter.get('/', async (request, response) => {
-    const users = await tigerUser
-      .find({})
-      .populate('tigerPost', { image: 1, tiger: 1 })
-  
+// Get all tigerUsers and posts.
+
+TigerUserRouter.get('/', async (request, response) => {
+    const users = await TigerUser
+        .find({})
+        .populate('tigerPost', { image: 1, tiger: 1 })
+
     response.json(users)
-  })
+})
 
-tigerPostsRouter.post('/', async (request, response) => {
-    const { username, name, password } = request.body
+// Create new user. Has username, password and avatar.
+
+TigerUserRouter.post('/', async (request, response) => {
+    console.log('request.body', request.body)
+    const { username, password, avatar } = request.body
+
+    const existingUser = await TigerUser.findOne({ username })
+
+    if (existingUser) {
+        return response.status(400).json({
+            error: 'username must be unique'
+        })
+    }
 
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
-    const tiger = new tigerUser({
+    const newTigerUser = new TigerUser({
         username,
-        name,
         passwordHash,
+        avatar
     })
-    })
+
+    const savedUser = await newTigerUser.save()
+
+    response.status(201).json(savedUser)
+})
+
+module.exports = TigerUserRouter

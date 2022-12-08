@@ -5,7 +5,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 
 const mongoose = require('mongoose')
-const config = require('../utils/config')
+mongoose.set('strictQuery', false);
+const config = require('./utils/config')
 const tigerApp = express()
 
 // Routers
@@ -26,18 +27,18 @@ mongoose
 
 
 
- tigerApp.use('/tigerPosts', tigerPostsRouter)
+// tigerApp.use('/', tigerPostsRouter)
 
 // Morgan logger
+
+
+// Posts
+
+tigerApp.use('/users', tigerUsersRouter)
+tigerApp.use('/posts', tigerPostsRouter)
+// tigerApp.use('/', tigerCommentsRouter)
 
 morgan.token('body', (req) => JSON.stringify(req.body))
 tigerApp.use(morgan(':method :url :status :res[content-length] - :response-time ms - :body'))
 
-// Posts
-
-tigerApp.use('/tigerPosts', tigerPostsRouter)
-tigerApp.use('/tigerComments', tigerCommentsRouter)
-tigerApp.use('/tigerUsers', tigerUsersRouter)
-
-
-    module.exports = tigerApp
+module.exports = tigerApp

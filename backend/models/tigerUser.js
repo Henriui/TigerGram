@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const tigerPostSchema = new mongoose.Schema({
+const tigerUserSchema = new mongoose.Schema({
     username: {
         type: String,
         minLength: 2,
@@ -9,12 +9,8 @@ const tigerPostSchema = new mongoose.Schema({
     },
     passwordHash: String,
     avatar: {
-        type: URL,
+        type: String,
         required: [true, 'Avatar required']
-    },
-    image: {
-        type: URL,
-        required: [true, 'Image of a tiger required']
     },
     tigerPosts: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -22,13 +18,14 @@ const tigerPostSchema = new mongoose.Schema({
     }]
 })
 
-tigerPostSchema.set('toJSON', {
+tigerUserSchema.set('toJSON', {
     transform: (document, returnedObject) => {
-      returnedObject.id = returnedObject._id.toString()
-      delete returnedObject._id
-      delete returnedObject.__v
-      // the passwordHash should not be revealed
-      delete returnedObject.passwordHash
+        returnedObject.id = returnedObject._id.toString()
+        delete returnedObject._id
+        delete returnedObject.__v
+        // the passwordHash should not be revealed
+        delete returnedObject.passwordHash
     }
-  })
-module.exports = mongoose.model('tigerPersons', tigerPostSchema)
+})
+const TigerUser = mongoose.model('TigerUser', tigerUserSchema)
+module.exports = TigerUser

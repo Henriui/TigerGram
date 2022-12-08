@@ -4,16 +4,17 @@ const mongoose = require('mongoose')
 const tigerPostSchema = new mongoose.Schema({
     tigerUser:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'tigerUser',
+        ref: 'TigerUser',
         required: [true, 'user who posted required']
     },
     image: {
-        type: URL,
+        type: String,
         required: [true, 'Image of a tiger required']
     },
+    date: Date,
     tigerComment: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'tigerComment'
+        ref: 'TigerComment'
     }]
 })
 
@@ -24,5 +25,5 @@ tigerPostSchema.set('toJSON', {
       delete returnedObject.__v
     }
   })
-  
-module.exports = mongoose.model('tigerPost', tigerPostSchema)
+
+module.exports = mongoose.model('TigerPost', tigerPostSchema)
