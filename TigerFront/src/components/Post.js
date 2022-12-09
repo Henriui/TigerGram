@@ -16,11 +16,17 @@ import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 import SettingsIcon from '@mui/icons-material/Settings';
+import Modal from '@material-ui/core/Modal';
 // import HoverRating from './HoverRating';
 
-function Post({ post }) {
+
+function Post({ post, posts, setPosts, getModalStyle, useStyles}) {
+    const classes = useStyles();
+    const [modalStyle] = React.useState(getModalStyle);
     const [comment, setComment] = useState("");
-    const [open, setOpen] = React.useState(false);
+    const [editText, setEditText] = useState("");
+    const [open, setOpen] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
     const anchorRef = React.useRef(null);
 
     const handleNameChange = (event) => {
@@ -30,11 +36,18 @@ function Post({ post }) {
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
     };
+
     const handleClose = (event) => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
             return;
         }
 
+        if (event.target.id === "delete") {
+            removePost(event);
+        } else if (event.target.id === "edit") {
+            console.log("edit");
+            setOpenEdit(true);
+        }
         setOpen(false);
     };
 
@@ -68,8 +81,52 @@ function Post({ post }) {
             Object.assign(post, newPostComment)
         }
     }
+
+    // removes post
+    const removePost = (event) => {
+        setPosts(posts.filter((p) => p.id !== post.id));
+    }
+
+    // TODO edit post
+    const editPost = (event) => {
+        event.preventDefault();
+        setPosts(posts.map((p) => {
+            if (p.id === post.id) {
+                p.text = editText;
+            }
+            return p;
+        }))
+        setOpenEdit(false);
+    }
+
     return (
         <div className='post'>
+            <Modal
+            open={openEdit}
+            onClose={() => setOpenEdit(false)}>
+            <div style={modalStyle} className={classes.paper}>
+              <center>
+                <img
+                  className="app__headerImgae"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+                  height="30px"
+                  alt="Logo" />
+              </center>
+              <form className="app_siginForm" onSubmit={editPost}>
+                <TextField
+                  label="Post Text"
+                  variant="outlined"
+                  size="small"
+                  name="Post Text"
+                  type="text"
+                  value={editText}
+                  onChange={e => setEditText(e.target.value)}
+                  className="app_formField"
+                />
+                <Button type="submit" variant="contained" color="primary" >Post edited text</Button>
+              </form>
+            </div>
+          </Modal>
             <div className='post_header'>
                 <ListItem>
                     <ListItemAvatar>
@@ -110,9 +167,9 @@ function Post({ post }) {
                                                 aria-labelledby="composition-button"
                                                 onKeyDown={handleListKeyDown}
                                             >
-                                                <MenuItem onClick={(event) => { handleClose(event); console.log("I need to edit text");}}><EditIcon />Edit Text</MenuItem>
+                                                <MenuItem id = "edit" onClick={(event) => { handleClose(event); console.log("I need to edit text");}}><EditIcon />Edit Text</MenuItem>
                                                 <Divider sx={{ my: 0.5 }} />
-                                                <MenuItem onClick={(event) => { handleClose(event); console.log("I need to delete text"); }}><DeleteIcon />Delete</MenuItem>
+                                                <MenuItem id = "delete" onClick={(event) => { handleClose(event); console.log("I need to delete text"); }}><DeleteIcon />Delete</MenuItem>
                                             </MenuList>
                                         </ClickAwayListener>
                                     </Paper>
