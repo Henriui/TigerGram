@@ -1,13 +1,20 @@
 const mongoose = require('mongoose')
+const { Schema } = mongoose;
 
+
+// User has username, password, avatar, tigerposts and comments.
 
 const tigerUserSchema = new mongoose.Schema({
+    _id: Schema.Types.ObjectId,
     username: {
         type: String,
         minLength: 2,
         required: [true, 'Username required']
     },
-    passwordHash: String,
+    passwordHash: {
+        type: String,
+        required: [true, 'Password required']
+    },
     avatar: {
         type: String,
         required: [true, 'Avatar required']
@@ -15,6 +22,10 @@ const tigerUserSchema = new mongoose.Schema({
     tigerPosts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'TigerPost'
+    }],
+    tigerComments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'TigerComment'
     }]
 })
 
