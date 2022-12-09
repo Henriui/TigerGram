@@ -18,7 +18,7 @@ import Stack from '@mui/material/Stack';
 import SettingsIcon from '@mui/icons-material/Settings';
 // import HoverRating from './HoverRating';
 
-function Post({ post }) {
+function Post({ post, posts, setPosts}) {
     const [comment, setComment] = useState("");
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
@@ -33,6 +33,12 @@ function Post({ post }) {
     const handleClose = (event) => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
             return;
+        }
+
+        if (event.target.id === "delete") {
+            removePost(event);
+        } else if (event.target.id === "edit") {
+            console.log("edit");
         }
 
         setOpen(false);
@@ -68,6 +74,17 @@ function Post({ post }) {
             Object.assign(post, newPostComment)
         }
     }
+
+    // removes post
+    const removePost = (event) => {
+        setPosts(posts.filter((p) => p.id !== post.id));
+    }
+
+    // TODO edit post
+    const editPost = (event) => {
+
+    }
+
     return (
         <div className='post'>
             <div className='post_header'>
@@ -110,9 +127,9 @@ function Post({ post }) {
                                                 aria-labelledby="composition-button"
                                                 onKeyDown={handleListKeyDown}
                                             >
-                                                <MenuItem onClick={(event) => { handleClose(event); console.log("I need to edit text");}}><EditIcon />Edit Text</MenuItem>
+                                                <MenuItem id = "edit" onClick={(event) => { handleClose(event); console.log("I need to edit text");}}><EditIcon />Edit Text</MenuItem>
                                                 <Divider sx={{ my: 0.5 }} />
-                                                <MenuItem onClick={(event) => { handleClose(event); console.log("I need to delete text"); }}><DeleteIcon />Delete</MenuItem>
+                                                <MenuItem id = "delete" onClick={(event) => { handleClose(event); console.log("I need to delete text"); }}><DeleteIcon />Delete</MenuItem>
                                             </MenuList>
                                         </ClickAwayListener>
                                     </Paper>
