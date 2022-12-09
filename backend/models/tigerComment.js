@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 const tigerCommentSchema = new mongoose.Schema({
     _id: Schema.Types.ObjectId,
-    tigerpost_id: {
+    tigerpost: {
         type: Schema.Types.ObjectId,
         ref: "TigerPost"
     },

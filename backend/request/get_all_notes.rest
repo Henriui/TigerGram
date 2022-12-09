@@ -7,6 +7,24 @@ content-type: application/json
     "image": "https://cdn.discordapp.com/attachments/1039070834481967185/1050725118285971546/0f5cddcf96d10930a84f58f5cada7e2d.jpg"
 } 
 ###
+POST http://localhost:3003/users/ HTTP/1.1
+content-type: application/json
+
+  {
+    "username": "Test User",
+    "name": "Autotest",
+    "password": "123"
+  }
+###
+POST http://localhost:3003/comments/ HTTP/1.1
+content-type: application/json
+
+  {
+    "tigerUser": "63931d055e9e80264c76206c",
+    "tigerPost": "63932972cf1e102db1966c9a",
+    "text": "Hemosöpö kissa"
+  }
+###
 
 GET http://localhost:3003/posts HTTP/1.1
 content-type: application/json
@@ -30,13 +48,4 @@ content-type: application/json
 {
     "likes": 122
 }
-###
-POST http://localhost:3001/api/users/ HTTP/1.1
-content-type: application/json
-
-  {
-    "username": "Test User",
-    "name": "Autotest",
-    "password": "123"
-  }
 
