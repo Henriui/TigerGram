@@ -2,7 +2,6 @@ const tigerPostsRouter = require('express').Router()
 const TigerPost = require('../models/tigerPost');
 
 // Get all tigerposts
-
 tigerPostsRouter.get('/', async (request, response) => {
     const posts = await TigerPost.find({}).populate('tigerUser', { username: 1 })
     response.json(posts)
@@ -10,11 +9,13 @@ tigerPostsRouter.get('/', async (request, response) => {
 })
 
 // Get tigerPost by :id
-
-// TODO:
+tigerPostsRouter.get('/:id', async (request, response) => {
+    const id = (request.params.id);
+    const post = await TigerPost.findById(id);
+    response.json(post);
+})
 
 // Add new tigerPost
-
 tigerPostsRouter.post('/', async (request, response) => {
     const body = request.body
 
@@ -41,7 +42,6 @@ tigerPostsRouter.post('/', async (request, response) => {
 })
 
 // Delete tigerpost by :id
-
 tigerPostsRouter.delete('/:id', async (request, response) => {
     await TigerPost.findByIdAndRemove(request.params.id)
     response.status(204).end()
