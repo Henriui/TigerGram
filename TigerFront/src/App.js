@@ -156,7 +156,7 @@ function App() {
             </div>
           </div>
           {posts.map((post, i) =>
-            <Post key={i} post={post} posts={posts} setPosts={setPosts}/>
+            <Post key={i} post={post} posts={posts} setPosts={setPosts} getModalStyle={getModalStyle} useStyles={useStyles}/>
           )}
 
         </div>

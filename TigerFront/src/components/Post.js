@@ -17,32 +17,10 @@ import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Modal from '@material-ui/core/Modal';
-import { makeStyles } from '@material-ui/core/styles';
 // import HoverRating from './HoverRating';
 
-const getModalStyle = () => {
-    const top = 50;
-    const left = 50;
-  
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`,
-    };
-}
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-      position: 'absolute',
-      width: 400,
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 5),
-    },
-  }));
-
-function Post({ post, posts, setPosts}) {
+function Post({ post, posts, setPosts, getModalStyle, useStyles}) {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [comment, setComment] = useState("");
