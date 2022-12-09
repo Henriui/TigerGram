@@ -14,7 +14,7 @@ const tigerUserSchema = new mongoose.Schema({
     },
     tigerPosts: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'tigerPosts'
+        ref: 'TigerPost'
     }]
 })
 

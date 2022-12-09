@@ -12,7 +12,7 @@ const tigerApp = express()
 // Routers
 
 const tigerPostsRouter = require('./controllers/tigerPosts')
-const tigerCommentsRouter = require('./controllers/tigerComments')
+// const tigerCommentsRouter = require('./controllers/tigerComments')
 const tigerUsersRouter = require('./controllers/tigerUsers')
 
 mongoose
@@ -30,15 +30,16 @@ mongoose
 // tigerApp.use('/', tigerPostsRouter)
 
 // Morgan logger
+morgan.token('body', (req) => JSON.stringify(req.body))
+tigerApp.use(morgan(':method :url :status :res[content-length] - :response-time ms - :body'))
 
 
 // Posts
+tigerApp.use(express.json());
 
 tigerApp.use('/users', tigerUsersRouter)
 tigerApp.use('/posts', tigerPostsRouter)
 // tigerApp.use('/', tigerCommentsRouter)
 
-morgan.token('body', (req) => JSON.stringify(req.body))
-tigerApp.use(morgan(':method :url :status :res[content-length] - :response-time ms - :body'))
 
 module.exports = tigerApp

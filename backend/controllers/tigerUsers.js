@@ -15,7 +15,6 @@ TigerUserRouter.get('/', async (request, response) => {
 // Create new user. Has username, password and avatar.
 
 TigerUserRouter.post('/', async (request, response) => {
-    console.log('request.body', request.body)
     const { username, password, avatar } = request.body
 
     const existingUser = await TigerUser.findOne({ username })
