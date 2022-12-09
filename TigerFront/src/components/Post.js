@@ -16,11 +16,39 @@ import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 import SettingsIcon from '@mui/icons-material/Settings';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
 // import HoverRating from './HoverRating';
 
+const getModalStyle = () => {
+    const top = 50;
+    const left = 50;
+  
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`,
+    };
+}
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 5),
+    },
+  }));
+
 function Post({ post, posts, setPosts}) {
+    const classes = useStyles();
+    const [modalStyle] = React.useState(getModalStyle);
     const [comment, setComment] = useState("");
-    const [open, setOpen] = React.useState(false);
+    const [editText, setEditText] = useState("");
+    const [open, setOpen] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
     const anchorRef = React.useRef(null);
 
     const handleNameChange = (event) => {
@@ -30,6 +58,7 @@ function Post({ post, posts, setPosts}) {
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
     };
+
     const handleClose = (event) => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
             return;
@@ -39,8 +68,8 @@ function Post({ post, posts, setPosts}) {
             removePost(event);
         } else if (event.target.id === "edit") {
             console.log("edit");
+            setOpenEdit(true);
         }
-
         setOpen(false);
     };
 
@@ -82,11 +111,44 @@ function Post({ post, posts, setPosts}) {
 
     // TODO edit post
     const editPost = (event) => {
-
+        event.preventDefault();
+        setPosts(posts.map((p) => {
+            if (p.id === post.id) {
+                p.text = editText;
+            }
+            return p;
+        }))
+        setOpenEdit(false);
     }
 
     return (
         <div className='post'>
+            <Modal
+            open={openEdit}
+            onClose={() => setOpenEdit(false)}>
+            <div style={modalStyle} className={classes.paper}>
+              <center>
+                <img
+                  className="app__headerImgae"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+                  height="30px"
+                  alt="Logo" />
+              </center>
+              <form className="app_siginForm" onSubmit={editPost}>
+                <TextField
+                  label="Post Text"
+                  variant="outlined"
+                  size="small"
+                  name="Post Text"
+                  type="text"
+                  value={editText}
+                  onChange={e => setEditText(e.target.value)}
+                  className="app_formField"
+                />
+                <Button type="submit" variant="contained" color="primary" >Post edited text</Button>
+              </form>
+            </div>
+          </Modal>
             <div className='post_header'>
                 <ListItem>
                     <ListItemAvatar>
