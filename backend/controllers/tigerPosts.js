@@ -1,8 +1,8 @@
 const tigerPostsRouter = require('express').Router()
 
 const TigerPost = require('../models/tigerPost');
+const TigerComment = require('../models/tigerUser');
 const TigerUser = require('../models/tigerUser');
-const TigerComment = require('../models/TigerComment');
 
 // Get all tigerposts
 
@@ -10,7 +10,6 @@ tigerPostsRouter.get('/', async (request, response) => {
   const tigerPosts = await TigerPost
     .find({})
     .populate('TigerUser', { username: 1, avatar: 1 })
-  .populate('TigerComment', {TigerUser: 1, TigerComment: 1})
   response.json(tigerPosts)
 })
 
@@ -33,6 +32,7 @@ tigerPostsRouter.post('/', async (request, response) => {
   const tigerUser = await TigerUser.findById(body.userId)
 
   const newTigerPost = new TigerPost({
+    _id: new mongoose.Types.ObjectId(),
     content: body.content,
     important: body.important || false,
     date: new Date(),
