@@ -24,15 +24,9 @@ mongoose
     console.log('error connecting to MongoDB:', error.message)
   })
 
-
-
-
-// tigerApp.use('/', tigerPostsRouter)
-
 // Morgan logger
 morgan.token('body', (req) => JSON.stringify(req.body))
 tigerApp.use(morgan(':method :url :status :res[content-length] - :response-time ms - :body'))
-
 
 // Posts
 tigerApp.use(express.json());
