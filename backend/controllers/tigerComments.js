@@ -1,9 +1,6 @@
 const tigerCommentsRouter = require('express').Router()
 const mongoose = require('mongoose')
-
-const TigerPost = require('../models/tigerPost');
 const TigerComment = require('../models/tigerComment');
-const TigerUser = require('../models/tigerUser');
 
 // Get all tigercomments
 

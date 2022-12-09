@@ -1,8 +1,5 @@
 const tigerPostsRouter = require('express').Router()
-
 const TigerPost = require('../models/tigerPost');
-const TigerComment = require('../models/tigerUser');
-const TigerUser = require('../models/tigerUser');
 
 // Get all tigerposts
 
