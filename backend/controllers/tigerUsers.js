@@ -20,7 +20,7 @@ TigerUserRouter.get('/user/username=:username', async (request, response) => {
     const username = request.params.username
 
     const user = await TigerUser
-    .findOne({username:username})
+        .findOne({ username: username })
     response.json(user)
 })
 
@@ -29,7 +29,7 @@ TigerUserRouter.get('/user/username=:username', async (request, response) => {
 TigerUserRouter.get('/user/id=:id', async (request, response) => {
     const id = request.params.id.toString()
     const user = await TigerUser
-    .findById(id)
+        .findById(id)
     response.json(user)
 })
 
