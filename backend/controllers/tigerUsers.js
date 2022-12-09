@@ -7,7 +7,7 @@ const TigerUser = require('../models/tigerUser')
 TigerUserRouter.get('/', async (request, response) => {
     const users = await TigerUser
         .find({})
-        .populate('tigerPost', { image: 1, tiger: 1 })
+        .populate('tigerPost', { image: 1, date: 1 })
 
     response.json(users)
 })

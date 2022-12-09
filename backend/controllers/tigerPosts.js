@@ -9,7 +9,7 @@ const TigerComment = require('../models/TigerComment');
 tigerPostsRouter.get('/', async (request, response) => {
   const tigerPosts = await TigerPost
     .find({})
-    .populate('TigerUser', { username: 1, name: 1 })
+    .populate('TigerUser', { username: 1, avatar: 1 })
   .populate('TigerComment', {TigerUser: 1, TigerComment: 1})
   response.json(tigerPosts)
 })
