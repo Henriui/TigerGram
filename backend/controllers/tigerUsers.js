@@ -38,6 +38,9 @@ TigerUserRouter.get('/user/id=:id', async (request, response) => {
 TigerUserRouter.post('/', async (request, response) => {
     const { username, password, avatar } = request.body
 
+    if (password.length < 3)
+        return response.status(400).json({ error: 'password too small' })
+        
     const existingUser = await TigerUser.findOne({ username })
 
     if (existingUser) {

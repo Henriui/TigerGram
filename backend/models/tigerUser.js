@@ -11,7 +11,10 @@ const tigerUserSchema = new mongoose.Schema({
         minLength: 2,
         required: [true, 'Username required']
     },
-    passwordHash: String,
+    passwordHash: {
+        type: String,
+        required: [true, 'Password required']
+    },
     avatar: {
         type: String,
         required: [true, 'Avatar required']

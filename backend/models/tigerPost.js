@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 // Post is made of id, user, image, date and comments.
 
 const tigerPostSchema = new mongoose.Schema({
-    _id: Schema.Types.ObjectId,
     tigerUser:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'TigerUser',
