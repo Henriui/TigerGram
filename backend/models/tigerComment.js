@@ -9,8 +9,8 @@ const tigerCommentSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: "TigerPost"
     },
-    tigerUser_id: {
-        type: mongoose.Schema.Types.ObjectId,
+    tigerUser: {
+        type: Schema.Types.ObjectId,
         ref: 'TigerUser'
     },
     text: {

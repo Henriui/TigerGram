@@ -12,7 +12,7 @@ const tigerApp = express()
 // Routers
 
 const tigerPostsRouter = require('./controllers/tigerPosts')
-// const tigerCommentsRouter = require('./controllers/tigerComments')
+const tigerCommentsRouter = require('./controllers/tigerComments')
 const tigerUsersRouter = require('./controllers/tigerUsers')
 
 mongoose
@@ -33,7 +33,7 @@ tigerApp.use(express.json());
 
 tigerApp.use('/users', tigerUsersRouter)
 tigerApp.use('/posts', tigerPostsRouter)
-// tigerApp.use('/', tigerCommentsRouter)
+tigerApp.use('/comments', tigerCommentsRouter)
 
 
 module.exports = tigerApp
