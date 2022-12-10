@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
+const { Schema } = mongoose;
 
+// Post is made of id, user, image, date and comments.
 
 const tigerPostSchema = new mongoose.Schema({
     tigerUser:{
@@ -20,10 +22,11 @@ const tigerPostSchema = new mongoose.Schema({
 
 tigerPostSchema.set('toJSON', {
     transform: (document, returnedObject) => {
-      returnedObject.id = returnedObject._id.toString()
+      returnedObject.id = returnedObject._id
       delete returnedObject._id
       delete returnedObject.__v
     }
   })
 
-module.exports = mongoose.model('TigerPost', tigerPostSchema)
+const TigerPost = mongoose.model('TigerPost', tigerPostSchema)
+module.exports = TigerPost
