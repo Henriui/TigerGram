@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 // TODO: these informations need to be in the tietokanta in these spesific names. If changed: change also in Post.js and Comments.js
 const post = {
+  id: 1,
   username: "Kalle Tahna",
   avatar: "https://cdn.discordapp.com/attachments/1039070834481967185/1049287479905226792/8i4s4zpx7vh31.png",
   image: "https://cdn.discordapp.com/attachments/1039070834481967185/1049287479905226792/8i4s4zpx7vh31.png",
@@ -55,6 +56,7 @@ const post = {
   ],
 }
 const post1 = {
+  id: 2,
   username: "Henri Uimonen",
   avatar: "https://cdn.discordapp.com/attachments/1039070834481967185/1049287479905226792/8i4s4zpx7vh31.png",
   image: "https://cdn.discordapp.com/attachments/1039070834481967185/1049287479905226792/8i4s4zpx7vh31.png",
@@ -110,6 +112,7 @@ function App() {
     return (
       <>
         <div className="app">
+          {/* TODO: if user is not logged in. then the add button should be hidden (the MODAL part)*/}
           <Modal
             open={newPost}
             onClose={() => setNewPost(false)}>
@@ -153,7 +156,7 @@ function App() {
             </div>
           </div>
           {posts.map((post, i) =>
-            <Post key={i} post={post} setPosts={setPosts} />
+            <Post key={i} post={post} posts={posts} setPosts={setPosts} getModalStyle={getModalStyle} useStyles={useStyles}/>
           )}
 
         </div>

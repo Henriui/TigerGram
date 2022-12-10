@@ -1,0 +1,51 @@
+
+POST http://localhost:3003/posts HTTP/1.1
+content-type: application/json
+
+{
+    "tigerUser": "63931d055e9e80264c76206c",
+    "image": "https://cdn.discordapp.com/attachments/1039070834481967185/1050725118285971546/0f5cddcf96d10930a84f58f5cada7e2d.jpg"
+} 
+###
+POST http://localhost:3003/users/ HTTP/1.1
+content-type: application/json
+
+  {
+    "username": "Test User",
+    "name": "Autotest",
+    "password": "123"
+  }
+###
+POST http://localhost:3003/comments/ HTTP/1.1
+content-type: application/json
+
+  {
+    "tigerUser": "63931d055e9e80264c76206c",
+    "tigerPost": "63932972cf1e102db1966c9a",
+    "text": "Hemosöpö kissa"
+  }
+###
+
+GET http://localhost:3003/posts HTTP/1.1
+content-type: application/json
+###
+
+GET http://localhost:3003/comments HTTP/1.1
+content-type: application/json
+
+### 
+GET http://localhost:3003/users/ HTTP/1.1
+content-type: application/json
+###
+DELETE http://localhost:3001/api/blogs/63891969ec3b67f0c52b1e8b HTTP/1.1
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik11dXJhaGFpbmVuIDEiLCJpZCI6IjYzODkxN2MyZWI4MjA3ZTllMThkNWMyZiIsImlhdCI6MTY2OTkyOTQ2NCwiZXhwIjoxNjY5OTMzMDY0fQ.UM5GAYW6I9VCfjWTVP2tY2e_T-vp1tAVyqn5QSEHnM8
+
+###
+PUT http://localhost:3001/api/blogs/63891ed84a9ef285f2567901 HTTP/1.1
+content-type: application/json
+
+{
+    "likes": 122
+}
+
