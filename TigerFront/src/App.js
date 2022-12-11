@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './styles/App.css';
 import "./styles/Post.css"
+import services from "./services/posts";
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -35,56 +36,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// TODO: these informations need to be in the tietokanta in these spesific names. If changed: change also in Post.js and Comments.js
-const post = {
-  id: 1,
-  username: "Kalle Tahna",
-  avatar: "https://cdn.discordapp.com/attachments/1039070834481967185/1049287479905226792/8i4s4zpx7vh31.png",
-  image: "https://cdn.discordapp.com/attachments/1039070834481967185/1049287479905226792/8i4s4zpx7vh31.png",
-  text: "Kattokaa mun hemoo söpöö kissaa",
-  comments: [
-    {
-      username: "Jonne Borgman",
-      avatar: "/static/images/avatar/1.jpg",
-      text: "Läski kissa"
-    },
-    {
-      username: "Rasmus Hyyppä",
-      avatar: "/static/images/avatar/1.jpg",
-      text: "No on kyl"
-    }
-  ],
-}
-const post1 = {
-  id: 2,
-  username: "Henri Uimonen",
-  avatar: "https://cdn.discordapp.com/attachments/1039070834481967185/1049287479905226792/8i4s4zpx7vh31.png",
-  image: "https://cdn.discordapp.com/attachments/1039070834481967185/1049287479905226792/8i4s4zpx7vh31.png",
-  text: "Kattokaa mun hemoo söpöö kissaa",
-  comments: [
-    {
-      username: "Jonne Borgman",
-      avatar: "/static/images/avatar/1.jpg",
-      text: "Läski kissa"
-    },
-    {
-      username: "Rasmus Hyyppä",
-      avatar: "/static/images/avatar/1.jpg",
-      text: "No on kyl"
-    }
-  ],
-}
+
 //TODO: useeffect to fetch posts from tietokanta
 function App() {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
-  const [posts, setPosts] = useState([post, post1]);
+  const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null)
   const [postText, setPostText] = useState("")
 
+  useEffect(() => {
+    services.getAll().then((post) => {
+      setPosts(post);
+    });
+  }, []);
+
   const fileUploadHandler = (event) => {
-    const file = URL.createObjectURL(event.target.files[0])
+    console.log("file = ", event.target.files[0].name);
+    const file = URL.createObjectURL(event.target.files[0].name)
     setSelectedFile(file)
   }
 
@@ -94,21 +64,26 @@ function App() {
     //TODO: add post to tietokanta
     if (selectedFile !== null && postText !== "") {
       const newPost = {
-        username: "Kissa Rakas",
-        avatar: "https://cdn.discordapp.com/attachments/1039070834481967185/1049287479905226792/8i4s4zpx7vh31.png",
+        tigerUser: "639347fac73cce0d7a430149",
+        tigerAvatar: "https://cdn.discordapp.com/attachments/1039070834481967185/1050725118285971546/0f5cddcf96d10930a84f58f5cada7e2d.jpg",
         image: selectedFile,
         text: postText,
         comments: [
         ],
       }
+      services
+        .create(newPost)
+        .then((post) => {
+          setPosts(posts.concat(post));
+          setPostText("");
+        })
+      window.location.reload(true);
       setNewPost(false);
-      setPosts([...posts, newPost]);
-      setPostText("");
       setSelectedFile(null)
     }
 
   }
-  if (post !== []) {
+  if (posts.length !== 0) {
     return (
       <>
         <div className="app">
@@ -156,7 +131,7 @@ function App() {
             </div>
           </div>
           {posts.map((post, i) =>
-            <Post key={i} post={post} posts={posts} setPosts={setPosts} getModalStyle={getModalStyle} useStyles={useStyles}/>
+            <Post key={i} post={post} posts={posts} setPosts={setPosts} getModalStyle={getModalStyle} useStyles={useStyles} />
           )}
 
         </div>

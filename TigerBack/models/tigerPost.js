@@ -9,14 +9,32 @@ const tigerPostSchema = new mongoose.Schema({
         ref: 'TigerUser',
         required: [true, 'user who posted required']
     },
+    tigerAvatar: {
+        type: String,
+        ref: 'TigerAvatar',
+        required: [true, 'user avatar required']
+    },
     image: {
         type: String,
         required: [true, 'Image of a tiger required']
     },
+    text: {
+        type: String,
+        ref: 'text',
+        required: [true, 'post text is required']
+    },
     date: Date,
     tigerComment: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'TigerComment'
+        username: {
+            type: String,
+        },
+        avatar: {
+            type: String,
+        },
+        text: {
+            type: String,
+        },
+      
     }]
 })
 

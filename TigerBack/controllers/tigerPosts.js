@@ -3,9 +3,8 @@ const TigerPost = require('../models/tigerPost');
 
 // Get all tigerposts
 tigerPostsRouter.get('/', async (request, response) => {
-    const posts = await TigerPost.find({}).populate('tigerUser', { username: 1 })
+    const posts = await TigerPost.find({}).populate('tigerUser', { username: 1, avatar: 1 })
     response.json(posts)
-    console.log("mitäst teest", posts);
 })
 
 // Get tigerPost by :id
@@ -30,10 +29,12 @@ tigerPostsRouter.post('/', async (request, response) => {
 
     const post = new TigerPost({
         tigerUser: body.tigerUser,
+        tigerAvatar: body.tigerAvatar,
         image: body.image,
+        text: body.text,
         date: new Date()
     })
-
+    console.log("kun tulee tänne: ", post);
     const savedPost = await post.save()
     // user.post = user.post.concat(savedPost.id)
     // await user.save()
@@ -50,5 +51,15 @@ tigerPostsRouter.delete('/:id', async (request, response) => {
 // Edit tigerPost ()
 
 // TODO:
+tigerPostsRouter.put('/:id', async (request, response) => {
+    const body = request.body
+    const { tigerComment } = request.body
+    
+    const blog = await TigerPost.findByIdAndUpdate(request.params.id, { tigerComment }, { new: body.tigerComment })
+    if (blog)
+        response.json(blog)
+    else
+        response.status(404).end()
+})
 
 module.exports = tigerPostsRouter
