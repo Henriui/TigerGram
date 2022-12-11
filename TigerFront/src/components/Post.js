@@ -78,7 +78,6 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
         if (comment !== "") {
             const tigerComment = [...post.tigerComment, { username: user.username, avatar: user.avatar, text: comment }]
             const newPostComment = { ...post, tigerComment }
-            console.log("newPOst", newPostComment);
             setComment("");
             Object.assign(post, newPostComment)
 
@@ -110,7 +109,6 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
         }))
         setOpenEdit(false);
     }
-    console.log("onko user", user);
     if (user !== null) {
         return (
             <div className='post'>

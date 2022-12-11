@@ -34,7 +34,6 @@ tigerPostsRouter.post('/', async (request, response) => {
         text: body.text,
         date: new Date()
     })
-    console.log("kun tulee tänne: ", post);
     const savedPost = await post.save()
     // user.post = user.post.concat(savedPost.id)
     // await user.save()

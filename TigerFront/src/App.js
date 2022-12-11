@@ -319,10 +319,10 @@ function App() {
         <div className="app_header">
           <h1 className='app_name'>TigerGram</h1>
           <div>
-            <Fab variant="extended" size="small" color="primary" className="app_signinBtn" onClick={() => /*setOpenSignin(true)*/ console.log("post")}>
+            <Fab variant="extended" size="small" color="primary" className="app_signinBtn" onClick={() => setLogin(true)}>
               <LockOpenOutlinedIcon fontSize="small" /> SIGN IN
             </Fab>
-            <Fab variant="extended" size="small" color="secondary" onClick={() => /*setOpen(true)*/ console.log("post")}>
+            <Fab variant="extended" size="small" color="secondary" onClick={() => setSignUp(true)}>
               <PersonAddOutlinedIcon fontSize="small" /> SIGN UP
             </Fab>
           </div>
