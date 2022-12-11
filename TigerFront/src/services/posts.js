@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = 'http://localhost:3001/posts';
+const baseUrl = 'http://localhost:3003/posts';
 
 let token = null
 
