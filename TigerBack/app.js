@@ -14,6 +14,7 @@ const tigerApp = express()
 const tigerPostsRouter = require('./controllers/tigerPosts')
 const tigerCommentsRouter = require('./controllers/tigerComments')
 const tigerUsersRouter = require('./controllers/tigerUsers')
+const tigerLoginRouter = require('./controllers/tigerLogin')
 
 mongoose
   .connect(config.MONGO_URL)
@@ -34,6 +35,7 @@ tigerApp.use(cors());
 tigerApp.use('/users', tigerUsersRouter)
 tigerApp.use('/posts', tigerPostsRouter)
 tigerApp.use('/comments', tigerCommentsRouter)
+tigerApp.use('/login', tigerLoginRouter)
 
 
 module.exports = tigerApp
