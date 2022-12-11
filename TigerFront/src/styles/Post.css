@@ -12,6 +12,9 @@
 }
 .post_image{
     max-width: 600px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px !important;
 }
 .post_text {
@@ -43,4 +46,7 @@
     border-radius: 10px !important;
     background-color: #D89848 !important;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px !important;
+}
+.user_header{
+    width: 600px;
 }
