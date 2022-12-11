@@ -31,6 +31,7 @@ tigerApp.use(morgan(':method :url :status :res[content-length] - :response-time 
 
 // Posts
 tigerApp.use(express.json());
+tigerApp.use(express.static('build'))
 tigerApp.use(cors());
 tigerApp.use('/users', tigerUsersRouter)
 tigerApp.use('/posts', tigerPostsRouter)
