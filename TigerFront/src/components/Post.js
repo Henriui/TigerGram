@@ -76,7 +76,7 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
     const addComment = (event) => {
         event.preventDefault();
         if (comment !== "") {
-            const tigerComment = [...post.tigerComment, { username: "Testi Kommentoija", avatar: "/static/images/avatar/2.jpg", text: comment }]
+            const tigerComment = [...post.tigerComment, { username: user.username, avatar: user.avatar, text: comment }]
             const newPostComment = { ...post, tigerComment }
             console.log("newPOst", newPostComment);
             setComment("");
