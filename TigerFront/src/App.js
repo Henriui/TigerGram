@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 //TODO: useeffect to fetch posts from tietokanta
 function App() {
   const classes = useStyles();
