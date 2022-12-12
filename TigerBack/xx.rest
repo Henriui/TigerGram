@@ -8,11 +8,11 @@ GET http://localhost:3003/users/user/username=xxx
 Content-Type: application/json
 
 ### 
-POST http://localhost:3003/users
+POST http://localhost:3001/users
 content-type: application/json
 
 {
-    "username": "xxxyx",
-    "password": "xxyx",
+    "username": "Jonne",
+    "password": "123",
     "avatar": "xtxxx"
 }
