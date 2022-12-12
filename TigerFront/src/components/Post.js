@@ -19,7 +19,7 @@ import Modal from '@material-ui/core/Modal';
 // import HoverRating from './HoverRating';
 
 
-function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
+function Post({ post, posts, setPosts, getModalStyle, useStyles, user, setLogin }) {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [comment, setComment] = useState("");
@@ -70,7 +70,9 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
 
     // FIXME: when submitting comment, the text field does not empty out.
     const addComment = (event) => {
-        if (comment !== "") {
+        event.preventDefault();
+        if (comment !== "" && user !== null) {
+            console.log("haloo");
             const tigerComment = [...post.tigerComment, { username: user.username, avatar: user.avatar, text: comment }]
             const newPostComment = { ...post, tigerComment }
             Object.assign(post, newPostComment)
@@ -85,7 +87,6 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
                         )
                     );
                 })
-            event.preventDefault();
         }
     }
 
@@ -208,10 +209,15 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
                         <Comments key={i} comment={comment} />
                     )}
                 </div>
-                <form className='post_form' onSubmit={addComment}>
-                    <TextField label="add comment" size='small' variant='outlined' className='post_input' placeholder='add comment' value={comment} onChange={handleNameChange} />
-                    <Button variant='contained' size='small' endIcon={<SendIcon />} type='submit'>Send</Button>
-                </form>
+                {user ?
+                    <>
+                        <form className='post_form' onSubmit={addComment}>
+                            <TextField label="add comment" size='small' variant='outlined' className='post_input' placeholder='add comment' value={comment} onChange={handleNameChange} />
+                            <Button variant='contained' size='small' endIcon={<SendIcon />} type='submit'>Send</Button>
+                        </form>
+                    </> :
+                    <>
+                    </>}
             </div>
         </div>
     )
