@@ -66,7 +66,6 @@ function App() {
   useEffect(() => {
     services.getAll().then((post) => {
       setPosts(post);
-      console.log(post);
     });
   }, []);
 
@@ -80,7 +79,7 @@ function App() {
   }, [])
 
   const handleSignUp = async (event) => {
-    const avatar = isAvatar ? isAvatar : "https://picsum.photos/200/300";
+    const avatar = isAvatar ? isAvatar : "https://static8.depositphotos.com/1009634/1025/v/950/depositphotos_10255806-stock-illustration-no-user-profile-picture.jpg";
     
     event.preventDefault()
     try {
@@ -169,6 +168,7 @@ function App() {
       }, 5000)
     }
   }
+
   return (
     <>
       <div className="app">
