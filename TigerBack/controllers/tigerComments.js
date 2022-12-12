@@ -24,7 +24,6 @@ tigerCommentsRouter.post('/', async (request, response) => {
     //   return response.status(401).json({ error: 'token missing or invalid' })
     // }
     // const user = await TigerUser.findById(decodedToken.id)
-
     const newTigerComment = new TigerComment({
         _id: new mongoose.Types.ObjectId(),
         tigerUser: body.tigerUser,
