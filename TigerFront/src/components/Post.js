@@ -1,11 +1,10 @@
 import React from 'react'
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { ListItem, ListItemText, ListItemAvatar, Avatar, TextField, Button } from "@material-ui/core";
 import "../styles/Post.css"
 import Comments from './Comments';
 import SendIcon from '@material-ui/icons/Send'
 import DeleteIcon from '@mui/icons-material/Delete';
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
@@ -14,7 +13,6 @@ import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
-import Stack from '@mui/material/Stack';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Modal from '@material-ui/core/Modal';
 // import HoverRating from './HoverRating';
@@ -84,6 +82,7 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles}) {
 
     // removes post
     const removePost = (event) => {
+        event.preventDefault();
         setPosts(posts.filter((p) => p.id !== post.id));
     }
 

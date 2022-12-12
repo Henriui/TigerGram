@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import './styles/App.css';
 import "./styles/Post.css"
 import React from 'react';
