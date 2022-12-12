@@ -147,7 +147,7 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user, setLogin 
                             <Avatar className="post_avatar" src={post.tigerUser[0].avatar} alt="avatar"></Avatar>
                         </ListItemAvatar>
                         <ListItemText primary={post.tigerUser[0].username} ></ListItemText>
-                        {user ?
+                        {user && user.id === post.tigerUser[0].id ?
                             <>
                                 <div className='settings_button'>
                                     <Button
