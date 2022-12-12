@@ -1,5 +1,6 @@
 const tigerPostsRouter = require('express').Router()
 const TigerPost = require('../models/tigerPost');
+const jwt = require('jsonwebtoken')
 
 // Get all tigerposts
 tigerPostsRouter.get('/', async (request, response) => {
@@ -17,19 +18,16 @@ tigerPostsRouter.get('/:id', async (request, response) => {
 // Add new tigerPost
 tigerPostsRouter.post('/', async (request, response) => {
     const body = request.body
-
     // TODO: get user token and decode the token and the get the logged in user
 
-    //const token = getTokenFrom(request)
+    // const token = getTokenFrom(request)
     // const decodedToken = jwt.verify(request.token, process.env.SECRET)
     // if (!request.token || !decodedToken.id) {
     //   return response.status(401).json({ error: 'token missing or invalid' })
     // }
     // const user = await TigerUser.findById(decodedToken.id)
-
     const post = new TigerPost({
         tigerUser: body.tigerUser,
-        tigerAvatar: body.tigerAvatar,
         image: body.image,
         text: body.text,
         date: new Date()
@@ -52,9 +50,10 @@ tigerPostsRouter.delete('/:id', async (request, response) => {
 // TODO:
 tigerPostsRouter.put('/:id', async (request, response) => {
     const body = request.body
-    const { tigerComment } = request.body
     
-    const blog = await TigerPost.findByIdAndUpdate(request.params.id, { tigerComment }, { new: body.tigerComment })
+    const { tigerUser, tigerComment } = request.body
+    
+    const blog = await TigerPost.findByIdAndUpdate(request.params.id, { tigerUser, tigerComment }, { new: body.tigerComment })
     if (blog)
         response.json(blog)
     else

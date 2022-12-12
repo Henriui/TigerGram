@@ -1,5 +1,5 @@
 import React from 'react'
-import {useState } from "react";
+import { useState } from "react";
 import { ListItem, ListItemText, ListItemAvatar, Avatar, TextField, Button } from "@material-ui/core";
 import "../styles/Post.css"
 import services from "../services/posts";
@@ -27,7 +27,7 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
     const [open, setOpen] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
     const anchorRef = React.useRef(null);
-    
+
     const handleNameChange = (event) => {
         setComment(event.target.value);
     };
@@ -70,12 +70,11 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
 
     // FIXME: when submitting comment, the text field does not empty out.
     const addComment = (event) => {
-        event.preventDefault();
         if (comment !== "") {
             const tigerComment = [...post.tigerComment, { username: user.username, avatar: user.avatar, text: comment }]
             const newPostComment = { ...post, tigerComment }
-            setComment("");
             Object.assign(post, newPostComment)
+            setComment("");
 
             services
                 .update(post.id, newPostComment)
@@ -86,6 +85,7 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
                         )
                     );
                 })
+            event.preventDefault();
         }
     }
 
@@ -143,9 +143,9 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
                 <div className='user_header'>
                     <ListItem>
                         <ListItemAvatar>
-                            <Avatar className="post_avatar" src={post.tigerUser.avatar} alt="avatar"></Avatar>
+                            <Avatar className="post_avatar" src={post.tigerUser[0].avatar} alt="avatar"></Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={post.tigerUser.username} ></ListItemText>
+                        <ListItemText primary={post.tigerUser[0].username} ></ListItemText>
                         {user ?
                             <>
                                 <div className='settings_button'>
@@ -199,7 +199,7 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
                     </ListItem>
                 </div>
                 <img className='post_image' src={post.image} alt='Post pic' />
-                <h4 className='post_text'><strong>{post.tigerUser.username}: </strong>{post.text} </h4>
+                <h4 className='post_text'><strong>{post.tigerUser[0].username}: </strong>{post.text} </h4>
                 {/* <div className='add_rating'>
                     <HoverRating />
                 </div> */}
@@ -209,7 +209,7 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user }) {
                     )}
                 </div>
                 <form className='post_form' onSubmit={addComment}>
-                    <TextField label="add comment" size='small' variant='outlined' className='post_input' placeholder='add comment' onChange={handleNameChange} />
+                    <TextField label="add comment" size='small' variant='outlined' className='post_input' placeholder='add comment' value={comment} onChange={handleNameChange} />
                     <Button variant='contained' size='small' endIcon={<SendIcon />} type='submit'>Send</Button>
                 </form>
             </div>

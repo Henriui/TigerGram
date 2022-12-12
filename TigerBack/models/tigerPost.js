@@ -4,16 +4,19 @@ const { Schema } = mongoose;
 // Post is made of id, user, image, date and comments.
 
 const tigerPostSchema = new mongoose.Schema({
-    tigerUser:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'TigerUser',
-        required: [true, 'user who posted required']
-    },
-    tigerAvatar: {
-        type: String,
-        ref: 'TigerAvatar',
-        required: [true, 'user avatar required']
-    },
+    tigerUser: [{
+        username: {
+            type: String,
+        },
+        avatar: {
+            type: String,
+        },
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'TigerUser',
+            required: [true, 'user who posted required']
+        }
+    }],
     image: {
         type: String,
         required: [true, 'Image of a tiger required']

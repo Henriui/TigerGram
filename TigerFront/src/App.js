@@ -132,8 +132,12 @@ function App() {
     event.preventDefault();
     if (selectedFile !== null && postText !== "") {
       const newPost = {
-        tigerUser: user.id,
-        tigerAvatar: user.avatar,
+        tigerUser: [{
+          username: user.username,
+          avatar: user.avatar,
+          id: user.id
+          }
+        ],
         image: selectedFile,
         text: postText,
         comments: [
@@ -145,12 +149,11 @@ function App() {
           setPosts(posts.concat(post));
           setPostText("");
         })
-      window.location.reload(true);
+      //window.location.reload(true);
       setNewPost(false);
       setSelectedFile(null)
     }
   }
-  
   return (
     <>
       <div className="app">
