@@ -38,12 +38,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const Notification = ({ message, className }) => {
+  if (message === undefined) {
+    return "";
+  }
+  return <div className={className}>{message}</div>;
+};
+
 function App() {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState("")
   const [postText, setPostText] = useState("")
 
   const [signUp, setSignUp] = useState(false);
@@ -90,7 +98,7 @@ function App() {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setError({ error: `wrong username or password` })
+      setError({ error: `Username is taken, or password is too short` })
       setTimeout(() => {
         setError(null)
       }, 5000)
@@ -130,7 +138,7 @@ function App() {
 
   const addPost = (event) => {
     event.preventDefault();
-    if (selectedFile !== null && postText !== "") {
+    if (imageUrl !== null && postText !== "") {
       const newPost = {
         tigerUser: [{
           username: user.username,
@@ -138,7 +146,7 @@ function App() {
           id: user.id
           }
         ],
-        image: selectedFile,
+        image: imageUrl,
         text: postText,
         comments: [
         ],
@@ -152,16 +160,28 @@ function App() {
       //window.location.reload(true);
       setNewPost(false);
       setSelectedFile(null)
+      setImageUrl(null)
+    }
+    else{
+      setError({ error: `You need a url and post text` })
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
     }
   }
   return (
     <>
       <div className="app">
+        
         {/* //SignUp */}
         <Modal
           open={signUp}
           onClose={() => setSignUp(false)}>
           <div style={modalStyle} className={classes.paper}>
+            <Notification
+              message={errorMessage?.notification || errorMessage?.error}
+              className={errorMessage?.notification ? "notification" : "error"}
+            />
             <center>
               <img
                 className="app__headerImgae"
@@ -209,6 +229,10 @@ function App() {
           open={login}
           onClose={() => setLogin(false)}>
           <div style={modalStyle} className={classes.paper}>
+            <Notification
+              message={errorMessage?.notification || errorMessage?.error}
+              className={errorMessage?.notification ? "notification" : "error"}
+            />
             <center>
               <img
                 className="app__headerImgae"
@@ -245,6 +269,10 @@ function App() {
           open={newPost}
           onClose={() => setNewPost(false)}>
           <div style={modalStyle} className={classes.paper}>
+            <Notification
+              message={errorMessage?.notification || errorMessage?.error}
+              className={errorMessage?.notification ? "notification" : "error"}
+            />
             <center>
               <img
                 className="app__headerImgae"
@@ -253,10 +281,16 @@ function App() {
                 alt="Logo" />
             </center>
             <form className="app_siginForm" onSubmit={addPost}>
-              <Button variant="contained" color="secondary" component="label" className="app_formField">
-                Upload Kitty
-                <input hidden accept="image/*" multiple type="file" onChange={fileUploadHandler} />
-              </Button>
+              <TextField
+                label="Give Kitty Url"
+                variant="outlined"
+                size="small"
+                name="Give Kitty Url"
+                type="text"
+                value={imageUrl}
+                onChange={({ target }) => setImageUrl(target.value)}
+                className="app_formField"
+              />
               <TextField
                 label="Post Text"
                 variant="outlined"
@@ -292,7 +326,7 @@ function App() {
           </div>
         </div>
         {posts.length !== 0 ? posts.map((post, i) =>
-          <Post key={i} post={post} posts={posts} setPosts={setPosts} getModalStyle={getModalStyle} useStyles={useStyles} user={user} />
+          <Post key={i} post={post} posts={posts} setPosts={setPosts} getModalStyle={getModalStyle} useStyles={useStyles} user={user} setLogin={setLogin} />
         ) :
           <>
             <div className='post'>
