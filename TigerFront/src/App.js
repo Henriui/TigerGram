@@ -48,6 +48,7 @@ function App() {
 
   const [signUp, setSignUp] = useState(false);
   const [isAvatar, setSignUpAvatar] = useState("");
+  const [avatar, setAvatar] = useState("");
   const [login, setLogin] = useState(false);
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -71,9 +72,11 @@ function App() {
   }, [])
 
   const handleSignUp = async (event) => {
-    const avatar = isAvatar ? isAvatar : "https://picsum.photos/200/300"; 
+    const avatar = isAvatar ? isAvatar : "https://picsum.photos/200/300";
+    
     event.preventDefault()
     try {
+      setAvatar(avatar)
       const user = await signUpService.signUp({
         username, password, avatar
       })
@@ -81,6 +84,7 @@ function App() {
         'loggedNoteappUser', JSON.stringify(user)
       )
       services.setToken(user.token)
+
       setSignUp(false)
       setUser(user)
       setUsername('')
@@ -129,7 +133,7 @@ function App() {
     if (selectedFile !== null && postText !== "") {
       const newPost = {
         tigerUser: user.id,
-        tigerAvatar: user.isAvatar,
+        tigerAvatar: user.avatar,
         image: selectedFile,
         text: postText,
         comments: [
@@ -145,7 +149,6 @@ function App() {
       setNewPost(false);
       setSelectedFile(null)
     }
-
   }
   
   return (
