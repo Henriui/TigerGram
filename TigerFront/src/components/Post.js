@@ -93,6 +93,7 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user, setLogin 
     // removes post
     const removePost = (event) => {
         event.preventDefault();
+        services.deleteData(post.id);
         setPosts(posts.filter((p) => p.id !== post.id));
     }
 
@@ -102,6 +103,7 @@ function Post({ post, posts, setPosts, getModalStyle, useStyles, user, setLogin 
         setPosts(posts.map((p) => {
             if (p.id === post.id) {
                 p.text = editText;
+                services.update(p.id, p);
             }
             return p;
         }))
