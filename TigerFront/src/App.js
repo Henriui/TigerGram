@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//TODO: useeffect to fetch posts from tietokanta
 function App() {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
@@ -46,9 +45,9 @@ function App() {
   const [newPost, setNewPost] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null)
   const [postText, setPostText] = useState("")
-  
+
   const [signUp, setSignUp] = useState(false);
-  const [avatar, setSignUpAvatar] = useState("");
+  const [isAvatar, setSignUpAvatar] = useState("");
   const [login, setLogin] = useState(false);
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -71,8 +70,8 @@ function App() {
     }
   }, [])
 
-  const handleSignUp = async (event) =>{
-
+  const handleSignUp = async (event) => {
+    const avatar = isAvatar ? isAvatar : "https://picsum.photos/200/300"; 
     event.preventDefault()
     try {
       const user = await signUpService.signUp({
@@ -82,10 +81,10 @@ function App() {
         'loggedNoteappUser', JSON.stringify(user)
       )
       services.setToken(user.token)
+      setSignUp(false)
       setUser(user)
       setUsername('')
       setPassword('')
-      setLogin(false)
     } catch (exception) {
       setError({ error: `wrong username or password` })
       setTimeout(() => {
@@ -119,7 +118,7 @@ function App() {
     window.localStorage.removeItem('loggedNoteappUser')
     window.location.reload(true);
   }
-  
+
   const fileUploadHandler = (event) => {
     const file = URL.createObjectURL(event.target.files[0])
     setSelectedFile(file)
@@ -127,12 +126,10 @@ function App() {
 
   const addPost = (event) => {
     event.preventDefault();
-    //TODO: newPost username: current logged in user, and users avatar
-    //TODO: add post to tietokanta
     if (selectedFile !== null && postText !== "") {
       const newPost = {
         tigerUser: user.id,
-        tigerAvatar: user.avatar,
+        tigerAvatar: user.isAvatar,
         image: selectedFile,
         text: postText,
         comments: [
@@ -150,198 +147,168 @@ function App() {
     }
 
   }
-  if (posts.length !== 0 && user !== null) {
-    return (
-      <>
-        <div className="app">
-          <Modal
-            open={newPost}
-            onClose={() => setNewPost(false)}>
-            <div style={modalStyle} className={classes.paper}>
-              <center>
-                <img
-                  className="app__headerImgae"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
-                  height="30px"
-                  alt="Logo" />
-              </center>
-              <form className="app_siginForm" onSubmit={addPost}>
-                <Button variant="contained" color="secondary" component="label" className="app_formField">
-                  Upload Kitty
-                  <input hidden accept="image/*" multiple type="file" onChange={fileUploadHandler} />
-                </Button>
-                <TextField
-                  label="Post Text"
-                  variant="outlined"
-                  size="small"
-                  name="Post Text"
-                  type="text"
-                  value={postText}
-                  onChange={e => setPostText(e.target.value)}
-                  className="app_formField"
-                />
-                <Button type="submit" variant="contained" color="primary" >Post the kitty</Button>
-              </form>
-            </div>
-          </Modal>
-          {/* //LOGIN */}
-          
-          <div className="app_header">
-            <h1 className='app_name'>TigerGram</h1>
-            <div>
-              <Fab variant="extended" size="small" color="primary" className="app_signinBtn" onClick={handleLogout}>
-                <LockOpenOutlinedIcon fontSize="small" /> LOG OUT
-              </Fab>
-            </div>
-          </div>
-          {posts.map((post, i) =>
-            <Post key={i} post={post} posts={posts} setPosts={setPosts} getModalStyle={getModalStyle} useStyles={useStyles} user={user}/>
-          )}
-
-        </div>
-        <div className="add_post">
-          <Fab color="primary" aria-label="add" onClick={() => setNewPost(true)}>
-            <AddIcon />
-          </Fab>
-        </div>
-      </>
-    );
-  }
-  else if (posts.length !== 0 && user === null){
-    return (
-      <>
-        <div className="app">
-          {/* //SignUp */}
-          <Modal
-            open={signUp}
-            onClose={() => setSignUp(false)}>
-            <div style={modalStyle} className={classes.paper}>
-              <center>
-                <img
-                  className="app__headerImgae"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
-                  height="30px"
-                  alt="Logo" />
-              </center>
-              <form className="app_siginForm" onSubmit={handleSignUp}>
-                <TextField
-                  label="Username"
-                  variant="outlined"
-                  size="small"
-                  name="Username"
-                  type="text"
-                  value={username}
-                  onChange={({ target }) => setUsername(target.value)}
-                  className="app_formField"
-                />
-                <TextField
-                  label="Avatar URL"
-                  variant="outlined"
-                  size="small"
-                  name="Avatar URL"
-                  type="text"
-                  value={avatar}
-                  onChange={({ target }) => setSignUpAvatar(target.value)}
-                  className="app_formField"
-                />
-                <TextField
-                  label="Password"
-                  variant="outlined"
-                  size="small"
-                  name="Password"
-                  type="password"
-                  value={password}
-                  onChange={({ target }) => setPassword(target.value)}
-                  className="app_formField"
-                />
-                <Button type="submit" variant="contained" color="primary" >Sign Up!</Button>
-              </form>
-            </div>
-          </Modal>
-          {/* //Login */}
-          <Modal
-            open={login}
-            onClose={() => setLogin(false)}>
-            <div style={modalStyle} className={classes.paper}>
-              <center>
-                <img
-                  className="app__headerImgae"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
-                  height="30px"
-                  alt="Logo" />
-              </center>
-              <form className="app_siginForm" onSubmit={handleLogin}>
-                <TextField
-                  label="Username"
-                  variant="outlined"
-                  size="small"
-                  name="Username"
-                  type="text"
-                  value={username}
-                  onChange={({ target }) => setUsername(target.value)}
-                  className="app_formField"
-                />
-                <TextField
-                  label="Password"
-                  variant="outlined"
-                  size="small"
-                  name="Password"
-                  type="password"
-                  value={password}
-                  onChange={({ target }) => setPassword(target.value)}
-                  className="app_formField"
-                />
-                <Button type="submit" variant="contained" color="primary" >Log in!</Button>
-              </form>
-            </div>
-          </Modal>
-          <div className="app_header">
-            <h1 className='app_name'>TigerGram</h1>
-            <div>
-              <Fab variant="extended" size="small" color="primary" className="app_signinBtn" onClick={() => setLogin(true)}>
-                <LockOpenOutlinedIcon fontSize="small" /> SIGN IN
-              </Fab>
-              <Fab variant="extended" size="small" color="secondary" onClick={() => setSignUp(true)}>
-                <PersonAddOutlinedIcon fontSize="small" /> SIGN UP
-              </Fab>
-            </div>
-          </div>
-          {posts.map((post, i) =>
-            <Post key={i} post={post} posts={posts} setPosts={setPosts} getModalStyle={getModalStyle} useStyles={useStyles}  />
-          )}
-        </div>
-      </>
-    );
-  }
-  else{
-    return (
+  
+  return (
+    <>
       <div className="app">
+        {/* //SignUp */}
+        <Modal
+          open={signUp}
+          onClose={() => setSignUp(false)}>
+          <div style={modalStyle} className={classes.paper}>
+            <center>
+              <img
+                className="app__headerImgae"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+                height="30px"
+                alt="Logo" />
+            </center>
+            <form className="app_siginForm" onSubmit={handleSignUp}>
+              <TextField
+                label="Username"
+                variant="outlined"
+                size="small"
+                name="Username"
+                type="text"
+                value={username}
+                onChange={({ target }) => setUsername(target.value)}
+                className="app_formField"
+              />
+              <TextField
+                label="Avatar URL"
+                variant="outlined"
+                size="small"
+                name="Avatar URL"
+                type="text"
+                value={isAvatar}
+                onChange={({ target }) => setSignUpAvatar(target.value)}
+                className="app_formField"
+              />
+              <TextField
+                label="Password"
+                variant="outlined"
+                size="small"
+                name="Password"
+                type="password"
+                value={password}
+                onChange={({ target }) => setPassword(target.value)}
+                className="app_formField"
+              />
+              <Button type="submit" variant="contained" color="primary" >Sign Up!</Button>
+            </form>
+          </div>
+        </Modal>
+        {/* //Login */}
+        <Modal
+          open={login}
+          onClose={() => setLogin(false)}>
+          <div style={modalStyle} className={classes.paper}>
+            <center>
+              <img
+                className="app__headerImgae"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+                height="30px"
+                alt="Logo" />
+            </center>
+            <form className="app_siginForm" onSubmit={handleLogin}>
+              <TextField
+                label="Username"
+                variant="outlined"
+                size="small"
+                name="Username"
+                type="text"
+                value={username}
+                onChange={({ target }) => setUsername(target.value)}
+                className="app_formField"
+              />
+              <TextField
+                label="Password"
+                variant="outlined"
+                size="small"
+                name="Password"
+                type="password"
+                value={password}
+                onChange={({ target }) => setPassword(target.value)}
+                className="app_formField"
+              />
+              <Button type="submit" variant="contained" color="primary" >Log in!</Button>
+            </form>
+          </div>
+        </Modal>
+        <Modal
+          open={newPost}
+          onClose={() => setNewPost(false)}>
+          <div style={modalStyle} className={classes.paper}>
+            <center>
+              <img
+                className="app__headerImgae"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
+                height="30px"
+                alt="Logo" />
+            </center>
+            <form className="app_siginForm" onSubmit={addPost}>
+              <Button variant="contained" color="secondary" component="label" className="app_formField">
+                Upload Kitty
+                <input hidden accept="image/*" multiple type="file" onChange={fileUploadHandler} />
+              </Button>
+              <TextField
+                label="Post Text"
+                variant="outlined"
+                size="small"
+                name="Post Text"
+                type="text"
+                value={postText}
+                onChange={e => setPostText(e.target.value)}
+                className="app_formField"
+              />
+              <Button type="submit" variant="contained" color="primary" >Post the kitty</Button>
+            </form>
+          </div>
+        </Modal>
+        {/* //LOGIN */}
         <div className="app_header">
           <h1 className='app_name'>TigerGram</h1>
           <div>
-            <Fab variant="extended" size="small" color="primary" className="app_signinBtn" onClick={() => setLogin(true)}>
-              <LockOpenOutlinedIcon fontSize="small" /> SIGN IN
-            </Fab>
-            <Fab variant="extended" size="small" color="secondary" onClick={() => setSignUp(true)}>
-              <PersonAddOutlinedIcon fontSize="small" /> SIGN UP
-            </Fab>
+            {user ?
+              <>
+                <Fab variant="extended" size="small" color="primary" className="app_signinBtn" onClick={handleLogout}>
+                  <LockOpenOutlinedIcon fontSize="small" /> LOG OUT
+                </Fab>
+              </> :
+              <>
+                <Fab variant="extended" size="small" color="primary" className="app_signinBtn" onClick={() => setLogin(true)}>
+                  <LockOpenOutlinedIcon fontSize="small" /> SIGN IN
+                </Fab>
+                <Fab variant="extended" size="small" color="secondary" onClick={() => setSignUp(true)}>
+                  <PersonAddOutlinedIcon fontSize="small" /> SIGN UP
+                </Fab>
+              </>}
           </div>
         </div>
-        <div className='post'>
-          <div className='post_header'>
-            <ListItem>
-              <ListItemText primary={"There is no posts! Be first to post a tiger!"} ></ListItemText>
-            </ListItem>
-          </div>
-        </div>
-        <div className="add_post">
-          <Fab color="secondary" aria-label="add" onClick={addPost}>
-            <AddIcon />
-          </Fab>
-        </div>
+        {posts.length !== 0 ? posts.map((post, i) =>
+          <Post key={i} post={post} posts={posts} setPosts={setPosts} getModalStyle={getModalStyle} useStyles={useStyles} user={user} />
+        ) :
+          <>
+            <div className='post'>
+              <div className='post_header'>
+                <ListItem>
+                  <ListItemText primary={"There is no posts! Be first to post a tiger!"} ></ListItemText>
+                </ListItem>
+              </div>
+            </div>
+          </>}
+
       </div>
-    )
-  }
+      {user ?
+        <>
+          <div className="add_post">
+            <Fab color="primary" aria-label="add" onClick={() => setNewPost(true)}>
+              <AddIcon />
+            </Fab>
+          </div>
+        </> : <></>}
+    </>
+  );
 }
 
 export default App;
