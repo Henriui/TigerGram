@@ -51,9 +51,9 @@ tigerPostsRouter.delete('/:id', async (request, response) => {
 tigerPostsRouter.put('/:id', async (request, response) => {
     const body = request.body
     
-    const { tigerUser, tigerComment } = request.body
+    const { tigerUser, text } = request.body
     
-    const blog = await TigerPost.findByIdAndUpdate(request.params.id, { tigerUser, tigerComment }, { new: body.tigerComment })
+    const blog = await TigerPost.findByIdAndUpdate(request.params.id, { tigerUser, text }, { new: body.text })
     if (blog)
         response.json(blog)
     else
