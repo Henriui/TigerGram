@@ -16,3 +16,11 @@ content-type: application/json
     "password": "123",
     "avatar": "xtxxx"
 }
+
+###
+PUT http://localhost:3003/posts/639c47c53bfd905c671c282e HTTP/1.1
+content-type: application/json
+
+{
+    "text": "tää on muokattu teksti"
+}
