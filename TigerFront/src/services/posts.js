@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = '/posts';
+const baseUrl = 'https://tigerback.onrender.com/posts';
 
 let token = null;
 

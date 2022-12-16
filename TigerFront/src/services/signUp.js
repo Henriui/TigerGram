@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/users'
+const baseUrl = 'https://tigerback.onrender.com/users'
 
 const signUp = async credentials => {
     const response = await axios.post(baseUrl, credentials)
