@@ -208,12 +208,7 @@ function App() {
 							}
 						/>
 						<center>
-							<img
-								className='app__headerImgae'
-								src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png'
-								height='30px'
-								alt='Logo'
-							/>
+              <h1 className='app_name'>TigerGram</h1>
 						</center>
 						<form className='app_siginForm' onSubmit={handleSignUp}>
 							<TextField
@@ -275,12 +270,7 @@ function App() {
 							}
 						/>
 						<center>
-							<img
-								className='app__headerImgae'
-								src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png'
-								height='30px'
-								alt='Logo'
-							/>
+              <h1 className='app_name'>TigerGram</h1>
 						</center>
 						<form className='app_siginForm' onSubmit={handleLogin}>
 							<TextField
@@ -330,12 +320,7 @@ function App() {
 							}
 						/>
 						<center>
-							<img
-								className='app__headerImgae'
-								src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png'
-								height='30px'
-								alt='Logo'
-							/>
+              <h1 className='app_name'>TigerGram</h1>
 						</center>
 						<form className='app_siginForm' onSubmit={addPost}>
 							<TextField
